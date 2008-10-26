@@ -67,6 +67,29 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="RectangleMode.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BooGame.Interfaces\BooGame.Interfaces.csproj">
+      <Project>{1FC29131-7461-4A12-BED6-27508972B0F9}</Project>
+      <Name>BooGame.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BooGame.Sdl\BooGame.Sdl.csproj">
+      <Project>{4A0D902F-4E4A-48A1-99CF-8B6AF3A68C2C}</Project>
+      <Name>BooGame.Sdl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BooGame\BooGame.csproj">
+      <Project>{8CEDC34A-2532-4BDA-B1BB-EA0AAE38D084}</Project>
+      <Name>BooGame</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MfGames.Scene2\MfGames.Scene2.csproj">
+      <Project>{5A5BFF74-F8CC-45E7-B7B3-CB5F499D2F7F}</Project>
+      <Name>MfGames.Scene2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MfGames\MfGames.csproj">
+      <Project>{3BABBE73-CD1D-494E-A81F-E4EA40107FA9}</Project>
+      <Name>MfGames</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

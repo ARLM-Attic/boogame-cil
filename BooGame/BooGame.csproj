@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="C5, Version=1.1.0.0, Culture=neutral, PublicKeyToken=06a1b38866503b69, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\MfGames.Scene2\Libraries\C5.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -43,14 +47,34 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Tao.OpenGl, Version=2.1.0.12, Culture=neutral, PublicKeyToken=1ca010269a4501ef, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\Tao.OpenGl.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Game.cs" />
+    <Compile Include="ModeList.cs" />
+    <Compile Include="Platform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SceneNodeMode.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MfGames.Scene2\MfGames.Scene2\MfGames.Scene2.csproj">
+    <ProjectReference Include="..\BooGame.Interfaces\BooGame.Interfaces.csproj">
+      <Project>{1FC29131-7461-4A12-BED6-27508972B0F9}</Project>
+      <Name>BooGame.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MfGames.Scene2.Tao\MfGames.Scene2.Tao.csproj">
+      <Project>{1756B6AA-76DD-4C37-850E-5B0B5F658E04}</Project>
+      <Name>MfGames.Scene2.Tao</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MfGames.Scene2\MfGames.Scene2.csproj">
       <Project>{5A5BFF74-F8CC-45E7-B7B3-CB5F499D2F7F}</Project>
       <Name>MfGames.Scene2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MfGames\MfGames.csproj">
+      <Project>{3BABBE73-CD1D-494E-A81F-E4EA40107FA9}</Project>
+      <Name>MfGames</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

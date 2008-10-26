@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿
 namespace BooGame.Interfaces
 {
 	/// <summary>
@@ -12,5 +8,20 @@ namespace BooGame.Interfaces
 	/// </summary>
 	public interface IPlatform
 	{
+		/// <summary>
+		/// Gets the singleton window for the application.
+		/// </summary>
+		/// <value>The window.</value>
+		IPlatformWindow Window { get; }
+
+		/// <summary>
+		/// Indicates to the platform to process any events.
+		/// </summary>
+		void ProcessEvents();
+
+		/// <summary>
+		/// Swaps the OpenGL buffers to display the results to the user.
+		/// </summary>
+		void SwapBuffers();
 	}
 }
