@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="C5, Version=1.1.0.0, Culture=neutral, PublicKeyToken=06a1b38866503b69, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\C5.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -47,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GemsMode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -82,6 +87,10 @@
       <Project>{8CEDC34A-2532-4BDA-B1BB-EA0AAE38D084}</Project>
       <Name>BooGame</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MfGames.Scene2.Tao\MfGames.Scene2.Tao.csproj">
+      <Project>{1756B6AA-76DD-4C37-850E-5B0B5F658E04}</Project>
+      <Name>MfGames.Scene2.Tao</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MfGames.Scene2\MfGames.Scene2.csproj">
       <Project>{5A5BFF74-F8CC-45E7-B7B3-CB5F499D2F7F}</Project>
       <Name>MfGames.Scene2</Name>
@@ -90,6 +99,17 @@
       <Project>{3BABBE73-CD1D-494E-A81F-E4EA40107FA9}</Project>
       <Name>MfGames</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\Gem Blue.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Gem Green.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Gem Orange.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

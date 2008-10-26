@@ -3,6 +3,9 @@ using System.Threading;
 using BooGame.Interfaces;
 using MfGames.Input;
 using MfGames.Scene2;
+using MfGames.Scene2.Tao.OpenGL;
+
+using Tao.OpenGl;
 
 namespace BooGame
 {
@@ -95,6 +98,10 @@ namespace BooGame
 
 			Instance = this;
 
+			// Set up some OpenGL expectations.
+			Gl.glBlendFunc(Gl.GL_SRC_ALPHA, Gl.GL_ONE_MINUS_SRC_ALPHA);
+			Gl.glEnable(Gl.GL_BLEND);
+
 			// Loop through the system forever, sleeping as appropriate, until the IsRunning flag
 			// is changed.
 			while (isRunning)
@@ -124,17 +131,21 @@ namespace BooGame
 			}
 
 			// TODO Call the shutdown event.
+
+			// Clean up memory and run a final dispose.
+			Texture.DisposeTextures();
+			DisposeManager.Instance.DisposedManaged();
 		}
 		#endregion Execution
 
 		#region Input
-		private readonly InputManager inputManager = new InputManager();
+		private readonly ChainInputManager inputManager = new ChainInputManager();
 
 		/// <summary>
 		/// Gets or sets the input manager used for keyboard and mouse inputs.
 		/// </summary>
 		/// <value>The input.</value>
-		public InputManager Input
+		public ChainInputManager Input
 		{
 			get { return inputManager; }
 		}
@@ -146,6 +157,9 @@ namespace BooGame
 		/// </summary>
 		protected virtual void Render()
 		{
+			// Clear the screen.
+			Gl.glClear(Gl.GL_COLOR_BUFFER_BIT);
+
 			// Render the game mode if required
 			IMode currentMode = Modes.CurrentMode;
 
