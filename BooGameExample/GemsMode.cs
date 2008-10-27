@@ -8,6 +8,7 @@ using BooGame;
 using MfGames.Numerics;
 using MfGames.Scene2;
 using MfGames.Scene2.Collections;
+using MfGames.Scene2.Images;
 using MfGames.Scene2.Tao.OpenGL;
 
 using Svg;
