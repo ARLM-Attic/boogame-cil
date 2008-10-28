@@ -35,7 +35,7 @@ namespace BooGameExample
 			nodes.Add(image);
 
 			// Create the green gem.
-			imageKey = DevILImageLoader.Load(new FileInfo("Images/Gem Green.png"));
+			imageKey = SystemImageLoader.Load(new FileInfo("Images/Gem Green.png"));
 			image = new ImageNode<float>(imageKey);
 			image.Point = new Point2<float>(60, 90);
 			nodes.Add(image);
@@ -55,7 +55,28 @@ namespace BooGameExample
 			image = new ImageNode<float>(imageKey);
 			image.Point = new Point2<float>(200, 10);
 			nodes.Add(image);
+
+			// Create an animated image.
+			AnimatedImageNodeController<float> animatedController = new AnimatedImageNodeController<float>();
+			animatedController.NeedImageKey += OnLoadImageKey;
+			animatedController.Load(new FileInfo("Images/Gem Animation.xml"));
+			AnimatedImageNode<float> animatedImage = new AnimatedImageNode<float>(animatedController);
+			animatedImage.Point = new Point2<float>(10, 200);
+			Updating += animatedImage.OnUpdate;
+			nodes.Add(animatedImage);
 		}
 		#endregion Constructors
+
+		#region Events
+		/// <summary>
+		/// Called when the load image key event is called.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="args">The <see cref="MfGames.Scene2.Images.LoadImageKeyEventArgs"/> instance containing the event data.</param>
+		private void OnLoadImageKey(object sender, LoadImageKeyEventArgs args)
+		{
+			args.ImageKey = SystemImageLoader.Load(new FileInfo("Images/" + args.Path + ".png"));
+		}
+		#endregion Events
 	}
 }

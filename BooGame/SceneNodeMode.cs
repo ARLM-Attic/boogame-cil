@@ -9,28 +9,8 @@ namespace BooGame
 	/// Defines a mode that uses the MfGames.Scene2 to render its contents.
 	/// </summary>
 	public class SceneNodeMode
-		: IMode
+		: Mode
 	{
-		#region IMode Members
-		/// <summary>
-		/// Called when the mode is brought to the top of the stack,
-		/// either by adding or having the one above it popped.
-		/// </summary>
-		/// <param name="isAdded"></param>
-		public virtual void Activate(bool isAdded)
-		{
-		}
-
-		/// <summary>
-		/// Called when a mode is no longer activated, either by having
-		/// a mode pushed on top of it or having it removed from the list.
-		/// </summary>
-		/// <param name="isRemoved"></param>
-		public virtual void Deactivate(bool isRemoved)
-		{
-		}
-		#endregion IMode Members
-
 		#region Scene Graph
 		private ISceneNode<float> rootSceneNode;
 
@@ -49,7 +29,7 @@ namespace BooGame
 		/// <summary>
 		/// Renders this mode to the given context.
 		/// </summary>
-		public void Render()
+		public override void Render()
 		{
 			// If we don't have a root node, don't bother.
 			if (rootSceneNode == null)
@@ -59,9 +39,6 @@ namespace BooGame
 			Renderer<float> renderer = new Renderer<float>();
 			rootSceneNode.Render(renderer);
 		}
-		#endregion
-
-		#region Updating
 		#endregion
 	}
 }

@@ -4,6 +4,7 @@ using BooGame.Interfaces;
 using MfGames.Input;
 using MfGames.Scene2;
 using MfGames.Scene2.Tao.OpenGL;
+using MfGames.Time;
 
 using Tao.OpenGl;
 
@@ -169,11 +170,33 @@ namespace BooGame
 		#endregion Rendering
 
 		#region Updating
+		private long lastTick = DateTime.Now.Ticks;
+
+		/// <summary>
+		/// Fired when the game is updating the code.
+		/// </summary>
+		public EventHandler<UpdateEventArgs> Updating;
+
 		/// <summary>
 		/// Updates the game state for rendering.
 		/// </summary>
 		protected virtual void Update()
 		{
+			// Figure out how many ticks since the last update.
+			long currentTicks = DateTime.Now.Ticks;
+			long difference = currentTicks - lastTick;
+			lastTick = currentTicks;
+
+			// Create the event arguments for the update.
+			UpdateEventArgs args = new UpdateEventArgs();
+			args.ElapsedTicks = difference;
+
+			// Fire the event to anyone listening directly to the game.
+			if (Updating != null)
+				Updating(this, args);
+
+			// Fire to the current mode.
+			Modes.CurrentMode.Update(args);
 		}
 		#endregion Updatings
 
