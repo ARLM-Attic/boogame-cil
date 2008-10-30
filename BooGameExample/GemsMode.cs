@@ -5,6 +5,7 @@ using System.IO;
 
 using BooGame;
 
+using MfGames.Drawing;
 using MfGames.Numerics;
 using MfGames.Scene2;
 using MfGames.Scene2.Collections;
@@ -38,6 +39,13 @@ namespace BooGameExample
 			imageKey = SystemImageLoader.Load(new FileInfo("Images/Gem Green.png"));
 			image = new ImageNode<float>(imageKey);
 			image.Point = new Point2<float>(60, 90);
+			nodes.Add(image);
+
+			// Create the translucent orange.
+			imageKey = SystemImageLoader.Load(new FileInfo("Images/Gem Orange.png"));
+			image = new ImageNode<float>(imageKey);
+			image.Tint = new Color<float>(0.5f, 1f, 1f, 1f);
+			image.Point = new Point2<float>(110, 10);
 			nodes.Add(image);
 
 			// Load the baby squid image

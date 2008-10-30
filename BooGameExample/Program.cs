@@ -26,7 +26,8 @@ namespace BooGameExample
 
 			// Run the game loop, this will exit when the game as completed.
 			Game game = new Game();
-			game.Modes.DefaultMode = new GemsMode();
+			//game.Modes.DefaultMode = new GemsMode();
+			game.Modes.DefaultMode = new FontsMode();
 			game.Fps = 25;
 
 			// Set up the input commands.
