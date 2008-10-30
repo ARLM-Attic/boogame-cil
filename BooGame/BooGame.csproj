@@ -33,7 +33,7 @@
   <ItemGroup>
     <Reference Include="C5, Version=1.1.0.0, Culture=neutral, PublicKeyToken=06a1b38866503b69, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\MfGames.Scene2\Libraries\C5.dll</HintPath>
+      <HintPath>..\Libraries\C5.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
