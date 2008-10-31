@@ -8,6 +8,7 @@ using BooGame;
 using MfGames.Drawing;
 using MfGames.Numerics;
 using MfGames.Scene2;
+using MfGames.Scene2.Animation;
 using MfGames.Scene2.Collections;
 using MfGames.Scene2.Images;
 using MfGames.Scene2.Tao.OpenGL;
@@ -33,6 +34,15 @@ namespace BooGameExample
 			IImageKey imageKey = DevILImageLoader.Load(new FileInfo("Images/Gem Blue.png"));
 			ImageNode<float> image = new ImageNode<float>(imageKey);
 			image.Point = new Point2<float>(10, 10);
+			image.DrawableRenderAnimators.Add(
+				new DisappearingFlickerDrawableAnimation<float>());
+			image.DrawableRenderAnimators.Add(
+				new UnsteadyFlickerDrawableAnimation<float>()
+				{
+					OpacityScale = 0.2,
+					TimeScale = 1,
+				});
+			Updating += image.OnUpdate;
 			nodes.Add(image);
 
 			// Create the green gem.
