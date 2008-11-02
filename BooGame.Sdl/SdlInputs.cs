@@ -43,6 +43,17 @@ namespace BooGame.Sdl
 				case SK.SDLK_y: return InputTokens.Y;
 				case SK.SDLK_z: return InputTokens.Z;
 
+				case SK.SDLK_1: return InputTokens.D1;
+				case SK.SDLK_2: return InputTokens.D2;
+				case SK.SDLK_3: return InputTokens.D3;
+				case SK.SDLK_4: return InputTokens.D4;
+				case SK.SDLK_5: return InputTokens.D5;
+				case SK.SDLK_6: return InputTokens.D6;
+				case SK.SDLK_7: return InputTokens.D7;
+				case SK.SDLK_8: return InputTokens.D8;
+				case SK.SDLK_9: return InputTokens.D9;
+				case SK.SDLK_0: return InputTokens.D0;
+
 				case SK.SDLK_LEFT: return InputTokens.Left;
 				case SK.SDLK_RIGHT: return InputTokens.Right;
 				case SK.SDLK_UP: return InputTokens.Up;
@@ -75,6 +86,9 @@ namespace BooGame.Sdl
 				case SK.SDLK_RETURN: return InputTokens.Enter;
 				case SK.SDLK_NUMLOCK: return InputTokens.NumLock;
 				case SK.SDLK_SPACE: return InputTokens.Space;
+
+				case SK.SDLK_PERIOD: return InputTokens.Period;
+				case SK.SDLK_COMMA: return InputTokens.Comma;
 
 				case SK.SDLK_KP_ENTER: return InputTokens.NumPadEnter;
 				case SK.SDLK_KP_PLUS: return InputTokens.NumPadAdd;

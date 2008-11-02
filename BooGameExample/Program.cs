@@ -27,10 +27,12 @@ namespace BooGameExample
 			// Set up the game modes.
 			modes.Add(new GemsMode());
 			modes.Add(new FontsMode());
+			modes.Add(new SvgSquaresMode());
 
 			// Run the game loop, this will exit when the game as completed.
 			game = new Game();
-			game.Modes.DefaultMode = modes[modes.Count - 1];
+			modeIndex = modes.Count - 1;
+			game.Modes.DefaultMode = modes[modeIndex];
 			game.Fps = 25;
 
 			// Set up the input commands.
@@ -38,7 +40,7 @@ namespace BooGameExample
 			game.Input.Register(new Chain("ESCAPE"), OnQuit);
 			game.Input.Register(new Chain("QUIT"), OnQuit);
 			game.Input.Register(new Chain(new ChainLink("CONTROL", "x"), new ChainLink("CONTROL", "c")), OnQuit);
-			game.Input.InputActivated += OnInputActivated;
+			game.Input.InputDeactivated += OnInputDeactivated;
 
 			// Execute the game.
 			game.Run();
@@ -52,18 +54,28 @@ namespace BooGameExample
 
 		#region Input Processing
 		/// <summary>
-		/// Called when an input is activated (keyboard pressed).
+		/// Called when an input is deactivated (keyboard released).
 		/// </summary>
 		/// <param name="sender">The sender.</param>
 		/// <param name="args">The <see cref="MfGames.Input.InputEventArgs"/> instance containing the event data.</param>
-		private static void OnInputActivated(object sender, InputEventArgs args)
+		private static void OnInputDeactivated(object sender, InputEventArgs args)
 		{
-			if (args.Token == ",")
+			if (args.Token == InputTokens.Comma)
 			{
 				modeIndex--;
 
 				if (modeIndex < 0)
 					modeIndex = modes.Count - 1;
+
+				modeIndex = modeIndex % modes.Count;
+				game.Modes.Set(modes[modeIndex]);
+			}
+			else if (args.Token == InputTokens.Period)
+			{
+				modeIndex++;
+
+				if (modeIndex >= modes.Count)
+					modeIndex = 0;
 
 				modeIndex = modeIndex % modes.Count;
 				game.Modes.Set(modes[modeIndex]);

@@ -79,6 +79,9 @@
     <None Include="Fonts\lilac.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Images\1cm.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Images\Baby Squid.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -92,6 +95,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="RectangleMode.cs" />
+    <Compile Include="SvgSquaresMode.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BooGame.Interfaces\BooGame.Interfaces.csproj">
@@ -113,6 +117,10 @@
     <ProjectReference Include="..\MfGames.Scene2\MfGames.Scene2.csproj">
       <Project>{5A5BFF74-F8CC-45E7-B7B3-CB5F499D2F7F}</Project>
       <Name>MfGames.Scene2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MfGames.Svg\MfGames.Svg.csproj">
+      <Project>{D6DCA909-9248-4246-90F0-687A476FE6EA}</Project>
+      <Name>MfGames.Svg</Name>
     </ProjectReference>
     <ProjectReference Include="..\MfGames\MfGames.csproj">
       <Project>{3BABBE73-CD1D-494E-A81F-E4EA40107FA9}</Project>

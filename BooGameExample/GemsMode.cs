@@ -13,8 +13,6 @@ using MfGames.Scene2.Collections;
 using MfGames.Scene2.Images;
 using MfGames.Scene2.Tao.OpenGL;
 
-using Svg;
-
 namespace BooGameExample
 {
 	public class GemsMode
@@ -56,22 +54,6 @@ namespace BooGameExample
 			image = new ImageNode<float>(imageKey);
 			image.Tint = new Color<float>(0.5f, 1f, 1f, 1f);
 			image.Point = new Point2<float>(110, 10);
-			nodes.Add(image);
-
-			// Load the baby squid image
-			SvgDocument svg = SvgDocument.Open("Images/Baby Squid.svg");
-			Bitmap bitmap = new Bitmap(400, 400);
-			SvgRenderer renderer = SvgRenderer.FromImage(bitmap);
-			renderer.ScaleTransform(10, 10);
-			renderer.TextRenderingHint = TextRenderingHint.AntiAlias;
-			renderer.TextContrast = 1;
-			renderer.PixelOffsetMode = PixelOffsetMode.Half;
-			svg.Draw(renderer);
-			renderer.Save();
-
-			imageKey = SystemImageLoader.Load(bitmap);
-			image = new ImageNode<float>(imageKey);
-			image.Point = new Point2<float>(200, 10);
 			nodes.Add(image);
 
 			// Create an animated image.
