@@ -77,6 +77,33 @@ namespace BooGameExample
 		{
 			args.ImageKey = SystemImageLoader.Load(new FileInfo("Images/" + args.Path + ".png"));
 		}
+
+		/// <summary>
+		/// Called when the resolution is changed.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="args">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+		protected override void OnResolutionChanged(object sender, System.EventArgs args)
+		{
+			// Call the parent verion's.
+			base.OnResolutionChanged(sender, args);
+
+			// Reload all the image keys for this mode.
+			SceneNodeLinkedList<float> nodes = (SceneNodeLinkedList<float>) RootSceneNode;
+			IImageKey imageKey = DevILImageLoader.Load(new FileInfo("Images/Gem Blue.png"));
+			((ImageNode<float>) nodes[0]).ImageKey = imageKey;
+
+			// Create the green gem.
+			imageKey = SystemImageLoader.Load(new FileInfo("Images/Gem Green.png"));
+			((ImageNode<float>) nodes[1]).ImageKey = imageKey;
+
+			// Create the translucent orange.
+			imageKey = SystemImageLoader.Load(new FileInfo("Images/Gem Orange.png"));
+			((ImageNode<float>) nodes[2]).ImageKey = imageKey;
+
+			// Create an animated image.
+			((AnimatedImageNode<float>) nodes[3]).Controller.ReloadImageKeys();
+		}
 		#endregion Events
 	}
 }

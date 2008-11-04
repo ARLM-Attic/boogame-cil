@@ -22,7 +22,7 @@ namespace BooGameExample
 
 			// Set up the BooGame platform.
 			Platform.Instance = new SdlPlatform(false);
-			Platform.Instance.Window.Configure(640, 480, false, "BooGame SDL Example");
+			Platform.Instance.Window.Configure(Resolution.Standard640x480, 1, false, "BooGame SDL Example");
 
 			// Set up the game modes.
 			modes.Add(new GemsMode());
@@ -33,6 +33,9 @@ namespace BooGameExample
 			game = new Game();
 			modeIndex = modes.Count - 1;
 			game.Modes.DefaultMode = modes[modeIndex];
+			game.Resolutions.Add(Resolution.Standard640x480);
+			game.Resolutions.Add(Resolution.Standard800x600);
+			game.AddStandardResolutionBindings();
 			game.Fps = 25;
 
 			// Set up the input commands.

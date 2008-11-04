@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Threading;
 using BooGame.Interfaces;
+
+using C5;
+
 using MfGames.Input;
 using MfGames.Scene2;
 using MfGames.Scene2.Tao.OpenGL;
@@ -150,7 +153,71 @@ namespace BooGame
 		{
 			get { return inputManager; }
 		}
-		#endregion
+		#endregion Input
+
+		#region Resolutions
+		private readonly ArrayList<Resolution> resolutions = new ArrayList<Resolution>();
+
+		/// <summary>
+		/// Gets the resolutions.
+		/// </summary>
+		/// <value>The resolutions.</value>
+		public ArrayList<Resolution> Resolutions
+		{
+			get { return resolutions; }
+		}
+
+		/// <summary>
+		/// Adds the standard resolution bindings to the input manager. This uses F12 to toggle
+		/// full screen, and F11 to rotate through the resolutions set through this.Resolutions.
+		/// Shift-F11 rotates in reverse.
+		/// </summary>
+		public void AddStandardResolutionBindings()
+		{
+			Input.Register(new Chain(InputTokens.F11), OnCycleResolution);
+			Input.Register(new Chain(InputTokens.F12), OnToggleFullscreen);
+		}
+
+		/// <summary>
+		/// Called when an event requests the resolution be cycled through the resolutions in Resolution.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="args">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+		public void OnCycleResolution(object sender, EventArgs args)
+		{
+			// Don't bother do anything if we don't have at least one resolution.
+			if (resolutions.Count == 0)
+				return;
+
+			// Get the index of the current resolution.
+			int index = resolutions.IndexOf(Platform.Instance.Window.Resolution);
+
+			if (index < 0)
+			{
+				// If we didn't find it, just set it to the first one.
+				index = 0;
+			}
+			else
+			{
+				// Advance the index by one and make sure it fits.
+				index++;
+				index = index % resolutions.Count;
+			}
+
+			// Set the platform's resolution.
+			Platform.Instance.Window.Resolution = resolutions[index];
+		}
+
+		/// <summary>
+		/// Called when the system indicates a full-screen toggle.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="args">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+		public void OnToggleFullscreen(object sender, EventArgs args)
+		{
+			Platform.Instance.Window.Fullscreen = !Platform.Instance.Window.Fullscreen;
+		}
+		#endregion Resolutions
 
 		#region Rendering
 		/// <summary>

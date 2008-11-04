@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace BooGame.Interfaces
 {
 	/// <summary>
@@ -16,14 +18,6 @@ namespace BooGame.Interfaces
 		bool Fullscreen { get; set; }
 
 		/// <summary>
-		/// Gets or sets the height this <see cref="IPlatformWindow"/>.
-		/// Setting this value will change it dynamically; to set more than one setting at once, use
-		/// the Set function.
-		/// </summary>
-		/// <value>The height.</value>
-		int Height { get; set; }
-
-		/// <summary>
 		/// Gets or sets the title this <see cref="IPlatformWindow"/>.
 		/// Setting this value will change it dynamically; to set more than one setting at once, use
 		/// the Set function.
@@ -32,21 +26,32 @@ namespace BooGame.Interfaces
 		string Title { get; set; }
 
 		/// <summary>
-		/// Gets or sets the width this <see cref="IPlatformWindow"/>.
-		/// Setting this value will change it dynamically; to set more than one setting at once, use
-		/// the Set function.
+		/// Gets or sets the resolution of the screen.
 		/// </summary>
-		/// <value>The width.</value>
-		int Width { get; set; }
+		/// <value>The resolution.</value>
+		Resolution Resolution { get; set; }
+
+		/// <summary>
+		/// Gets or sets the resolution scale for the actual image.
+		/// </summary>
+		/// <value>The scale.</value>
+		float Scale { get; set; }
 
 		/// <summary>
 		/// Sets the specified width, height, and fullscreen of the window at once. If the window
 		/// has not been created, it will be with this function.
 		/// </summary>
-		/// <param name="width">The width.</param>
-		/// <param name="height">The height.</param>
+		/// <param name="resolution">The resolution.</param>
+		/// <param name="scale">The scale.</param>
 		/// <param name="fullscreen">if set to <c>true</c> then the window will be fullscreen.</param>
 		/// <param name="title">The title.</param>
-		void Configure(int width, int height, bool fullscreen, string title);
+		void Configure(Resolution resolution, float scale, bool fullscreen, string title);
+
+		#region Events
+		/// <summary>
+		/// Occurs when the resolution has been explicitly changed.
+		/// </summary>
+		event EventHandler ResolutionChanged;
+		#endregion Events
 	}
 }

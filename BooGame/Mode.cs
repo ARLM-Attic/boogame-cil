@@ -10,8 +10,41 @@ namespace BooGame
 	/// Defines an base class for modes.
 	/// </summary>
 	public class Mode
-		: IMode
+		: IDisposable, IMode
 	{
+		#region Constructors
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Mode"/> class.
+		/// </summary>
+		public Mode()
+		{
+			Platform.Instance.Window.ResolutionChanged += OnResolutionChanged;
+		}
+		#endregion
+
+		#region Destructors
+		private bool isDisposed = false;
+
+		/// <summary>
+		/// Releases unmanaged resources and performs other cleanup operations before the
+		/// <see cref="Mode"/> is reclaimed by garbage collection.
+		/// </summary>
+		~Mode()
+		{
+			if (!isDisposed)
+				Dispose();
+		}
+
+		/// <summary>
+		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+		/// </summary>
+		public void Dispose()
+		{
+			Platform.Instance.Window.ResolutionChanged -= OnResolutionChanged;
+			isDisposed = true;
+		}
+		#endregion
+
 		#region Activation and Deactivation
 		/// <summary>
 		/// Called when the mode is brought to the top of the stack,
@@ -38,6 +71,16 @@ namespace BooGame
 		/// </summary>
 		public virtual void Render()
 		{
+		}
+
+		/// <summary>
+		/// Called when the resolution is changed.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="args">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+		protected virtual void OnResolutionChanged(object sender, EventArgs args)
+		{
+			
 		}
 		#endregion
 

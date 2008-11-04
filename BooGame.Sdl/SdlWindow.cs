@@ -1,4 +1,6 @@
-﻿using BooGame.Interfaces;
+﻿using System;
+
+using BooGame.Interfaces;
 
 using Tao.OpenGl;
 
@@ -12,9 +14,9 @@ namespace BooGame.Sdl
 	{
 		#region IPlatformWindow Members
 		private bool fullscreen = false;
-		private int width = 640;
-		private int height = 480;
+		private Resolution resolution = Interfaces.Resolution.Standard640x480;
 		private string title = "BooGame";
+		private float scale = 1;
 
 		/// <summary>
 		/// Gets or sets a value indicating whether this <see cref="IPlatformWindow"/> is fullscreen.
@@ -36,20 +38,46 @@ namespace BooGame.Sdl
 		}
 
 		/// <summary>
-		/// Gets or sets the height this <see cref="IPlatformWindow"/>.
+		/// Gets or sets the resolution of this <see cref="IPlatformWindow"/>.
 		/// Setting this value will change it dynamically; to set more than one setting at once, use
 		/// the Set function.
 		/// </summary>
-		/// <value>The height.</value>
-		public int Height
+		/// <value>The resolution.</value>
+		public Resolution Resolution
 		{
 			get
 			{
-				return height;
+				return resolution;
 			}
 			set
 			{
-				height = value;
+				// We don't handle null values well.
+				if (value == null)
+					throw new Exception("Cannot assign a null resolution");
+
+				// Don't do anything if we haven't changed.
+				if (resolution == value)
+					return;
+
+				// Change the resolution.
+				resolution = value;
+				Configure();
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets the resolution scale for the actual image.
+		/// </summary>
+		/// <value>The scale.</value>
+		public float Scale
+		{
+			get
+			{
+				return scale;
+			}
+			set
+			{
+				scale = value;
 				Configure();
 			}
 		}
@@ -74,25 +102,6 @@ namespace BooGame.Sdl
 		}
 
 		/// <summary>
-		/// Gets or sets the width this <see cref="IPlatformWindow"/>.
-		/// Setting this value will change it dynamically; to set more than one setting at once, use
-		/// the Set function.
-		/// </summary>
-		/// <value>The width.</value>
-		public int Width
-		{
-			get
-			{
-				return width;
-			}
-			set
-			{
-				width = value;
-				Configure();
-			}
-		}
-
-		/// <summary>
 		/// Configures (creates or updates) the singleton window.
 		/// </summary>
 		private void Configure()
@@ -104,39 +113,57 @@ namespace BooGame.Sdl
 				Tao.Sdl.Sdl.SDL_ANYFORMAT;
 			int depth = 24;
 
+			// Add the full screen flag if we have it.
+			if (fullscreen)
+				flags = flags | Tao.Sdl.Sdl.SDL_FULLSCREEN;
+
 			// Create/update the video mode.
-			Tao.Sdl.Sdl.SDL_SetVideoMode(width, height, depth, flags);
+			Tao.Sdl.Sdl.SDL_SetVideoMode(resolution.Width, resolution.Height, depth, flags);
 			Tao.Sdl.Sdl.SDL_WM_SetCaption(title, null);
 
 			// Setup our screen
-			Gl.glViewport(0, 0, width, height);
+			Gl.glViewport(0, 0, resolution.Width, resolution.Height);
 			Gl.glMatrixMode(Gl.GL_PROJECTION);
 			Gl.glLoadIdentity();
 
 			//Glu.gluOrtho2D(0, m_ScreenWidth, m_ScreenHeight, 0);
-			Gl.glOrtho(0, width, height, 0, -100, 100);
+			Gl.glOrtho(0, resolution.Width * scale, resolution.Height * scale, 0, -100, 100);
 			Gl.glMatrixMode(Gl.GL_MODELVIEW);
+
+			// Set up some OpenGL expectations.
+			Gl.glBlendFunc(Gl.GL_SRC_ALPHA, Gl.GL_ONE_MINUS_SRC_ALPHA);
+			Gl.glEnable(Gl.GL_BLEND);
+
+			// Fire the event if appropriate.
+			if (ResolutionChanged != null)
+				ResolutionChanged(this, EventArgs.Empty);
 		}
 
 		/// <summary>
 		/// Configures the window with the given values, then creates the window (or updates it if it
 		/// already exists).
 		/// </summary>
-		/// <param name="newWidth">The new width.</param>
-		/// <param name="newHeight">The new height.</param>
+		/// <param name="newResolution">The new resolution.</param>
 		/// <param name="newFullscreen">if set to <c>true</c> [new fullscreen].</param>
 		/// <param name="newTitle">The new title.</param>
-		public void Configure(int newWidth, int newHeight, bool newFullscreen, string newTitle)
+		public void Configure(Resolution newResolution, float newScale, bool newFullscreen, string newTitle)
 		{
 			// Set all the internal values for the window.
-			width = newWidth;
-			height = newHeight;
+			resolution = newResolution;
 			fullscreen = newFullscreen;
+			scale = newScale;
 			title = newTitle;
 
 			// Configure the window.
 			Configure();
 		}
 		#endregion
+
+		#region Events
+		/// <summary>
+		/// Occurs when the resolution has been explicitly changed.
+		/// </summary>
+		public event EventHandler ResolutionChanged;
+		#endregion Events
 	}
 }
