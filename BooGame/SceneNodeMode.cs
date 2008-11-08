@@ -37,6 +37,7 @@ namespace BooGame
 
 			// Create the OpenGL context for the scene graph.
 			Renderer<float> renderer = new Renderer<float>();
+			rootSceneNode.PreRender(renderer);
 			rootSceneNode.Render(renderer);
 		}
 		#endregion

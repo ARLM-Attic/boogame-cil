@@ -29,8 +29,9 @@ namespace BooGameExample
 			RootSceneNode = nodes;
 
 			// Create the blue gem.
-			IImageKey imageKey = DevILImageLoader.Load(new FileInfo("Images/Gem Blue.png"));
-			ImageNode<float> image = new ImageNode<float>(imageKey);
+			BitmapLoader systemLoader = new BitmapLoader(new FileInfo("Images/Gem Blue.png"));
+			TextureLoader textureLoader = new TextureLoader(systemLoader);
+			ImageNode<float> image = new ImageNode<float>(textureLoader);
 			image.Point = new Point2<float>(10, 10);
 			image.DrawableRenderAnimators.Add(
 				new DisappearingFlickerDrawableAnimation<float>());
@@ -44,14 +45,16 @@ namespace BooGameExample
 			nodes.Add(image);
 
 			// Create the green gem.
-			imageKey = SystemImageLoader.Load(new FileInfo("Images/Gem Green.png"));
-			image = new ImageNode<float>(imageKey);
+			systemLoader = new BitmapLoader(new FileInfo("Images/Gem Green.png"));
+			textureLoader = new TextureLoader(systemLoader);
+			image = new ImageNode<float>(textureLoader);
 			image.Point = new Point2<float>(60, 90);
 			nodes.Add(image);
 
 			// Create the translucent orange.
-			imageKey = SystemImageLoader.Load(new FileInfo("Images/Gem Orange.png"));
-			image = new ImageNode<float>(imageKey);
+			systemLoader = new BitmapLoader(new FileInfo("Images/Gem Orange.png"));
+			textureLoader = new TextureLoader(systemLoader);
+			image = new ImageNode<float>(textureLoader);
 			image.Tint = new Color<float>(0.5f, 1f, 1f, 1f);
 			image.Point = new Point2<float>(110, 10);
 			nodes.Add(image);
@@ -75,34 +78,10 @@ namespace BooGameExample
 		/// <param name="args">The <see cref="MfGames.Scene2.Images.LoadImageKeyEventArgs"/> instance containing the event data.</param>
 		private void OnLoadImageKey(object sender, LoadImageKeyEventArgs args)
 		{
-			args.ImageKey = SystemImageLoader.Load(new FileInfo("Images/" + args.Path + ".png"));
-		}
+			BitmapLoader systemLoader = new BitmapLoader(new FileInfo("Images/" + args.Path + ".png"));
+			TextureLoader textureLoader = new TextureLoader(systemLoader);
 
-		/// <summary>
-		/// Called when the resolution is changed.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="args">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		protected override void OnResolutionChanged(object sender, System.EventArgs args)
-		{
-			// Call the parent verion's.
-			base.OnResolutionChanged(sender, args);
-
-			// Reload all the image keys for this mode.
-			SceneNodeLinkedList<float> nodes = (SceneNodeLinkedList<float>) RootSceneNode;
-			IImageKey imageKey = DevILImageLoader.Load(new FileInfo("Images/Gem Blue.png"));
-			((ImageNode<float>) nodes[0]).ImageKey = imageKey;
-
-			// Create the green gem.
-			imageKey = SystemImageLoader.Load(new FileInfo("Images/Gem Green.png"));
-			((ImageNode<float>) nodes[1]).ImageKey = imageKey;
-
-			// Create the translucent orange.
-			imageKey = SystemImageLoader.Load(new FileInfo("Images/Gem Orange.png"));
-			((ImageNode<float>) nodes[2]).ImageKey = imageKey;
-
-			// Create an animated image.
-			((AnimatedImageNode<float>) nodes[3]).Controller.ReloadImageKeys();
+			args.ImageKeyLoader = textureLoader;
 		}
 		#endregion Events
 	}

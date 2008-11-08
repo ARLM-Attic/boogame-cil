@@ -2,6 +2,8 @@
 
 using BooGame.Interfaces;
 
+using MfGames.Scene2.Tao.OpenGL;
+
 using Tao.OpenGl;
 
 namespace BooGame.Sdl
@@ -16,7 +18,6 @@ namespace BooGame.Sdl
 		private bool fullscreen = false;
 		private Resolution resolution = Interfaces.Resolution.Standard640x480;
 		private string title = "BooGame";
-		private float scale = 1;
 
 		/// <summary>
 		/// Gets or sets a value indicating whether this <see cref="IPlatformWindow"/> is fullscreen.
@@ -66,23 +67,6 @@ namespace BooGame.Sdl
 		}
 
 		/// <summary>
-		/// Gets or sets the resolution scale for the actual image.
-		/// </summary>
-		/// <value>The scale.</value>
-		public float Scale
-		{
-			get
-			{
-				return scale;
-			}
-			set
-			{
-				scale = value;
-				Configure();
-			}
-		}
-
-		/// <summary>
 		/// Gets or sets the title this <see cref="IPlatformWindow"/>.
 		/// Setting this value will change it dynamically; to set more than one setting at once, use
 		/// the Set function.
@@ -127,12 +111,15 @@ namespace BooGame.Sdl
 			Gl.glLoadIdentity();
 
 			//Glu.gluOrtho2D(0, m_ScreenWidth, m_ScreenHeight, 0);
-			Gl.glOrtho(0, resolution.Width * scale, resolution.Height * scale, 0, -100, 100);
+			Gl.glOrtho(0, resolution.Width, resolution.Height, 0, -100, 100);
 			Gl.glMatrixMode(Gl.GL_MODELVIEW);
 
 			// Set up some OpenGL expectations.
 			Gl.glBlendFunc(Gl.GL_SRC_ALPHA, Gl.GL_ONE_MINUS_SRC_ALPHA);
 			Gl.glEnable(Gl.GL_BLEND);
+
+			// Dispose all the OpenGL textures since they are no longer valid.
+			Texture.DisposeTextures();
 
 			// Fire the event if appropriate.
 			if (ResolutionChanged != null)
@@ -146,12 +133,11 @@ namespace BooGame.Sdl
 		/// <param name="newResolution">The new resolution.</param>
 		/// <param name="newFullscreen">if set to <c>true</c> [new fullscreen].</param>
 		/// <param name="newTitle">The new title.</param>
-		public void Configure(Resolution newResolution, float newScale, bool newFullscreen, string newTitle)
+		public void Configure(Resolution newResolution, bool newFullscreen, string newTitle)
 		{
 			// Set all the internal values for the window.
 			resolution = newResolution;
 			fullscreen = newFullscreen;
-			scale = newScale;
 			title = newTitle;
 
 			// Configure the window.

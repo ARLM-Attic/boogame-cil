@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.IO;
 
 using BooGame;
@@ -7,6 +8,7 @@ using MfGames.Drawing;
 using MfGames.Numerics;
 using MfGames.Scene2.Collections;
 using MfGames.Scene2.Images;
+using MfGames.Scene2.Svg;
 using MfGames.Scene2.Tao.OpenGL;
 using MfGames.Svg;
 
@@ -26,20 +28,19 @@ namespace BooGameExample
 			RootSceneNode = nodes;
 
 			// Load the image into memory.
-			int scale = 40;
-			SvgImageLoader svgImageLoader = new SvgImageLoader();
-			svgImageLoader.Scale = SvgImageLoader.CentimeterScale * scale;
-			Bitmap bitmap = svgImageLoader.Load(new FileInfo("Images/1cm.svg"));
-			IImageKey imageKey = SystemImageLoader.Load(bitmap);
+			float scale = 40;
+			svgLoader = new SvgLoader(new FileInfo("Images/1cm.svg"));
+			float screenScale = Platform.Instance.Window.Resolution.Height / 16f;
+			svgLoader.Scale = screenScale * SvgImageLoader.CentimeterScale;
+			TextureLoader textureLoader = new TextureLoader(svgLoader);
 
 			// Create squares across the board.
 			for (int i = 0; i < 600 / (2 * scale); i++)
 			{
 				for (int j = 0; j < 440 / scale; j++)
 				{
-					ImageNode<float> image = new ImageNode<float>(imageKey);
+					ImageNode<float> image = new ImageNode<float>(textureLoader);
 					image.Point = new Point2<float>((j % 2) * scale + i * 2 * scale, j * scale);
-					image.ImageKey = imageKey;
 
 					if (i % 4 == 0)
 						image.Tint = new Color<float>(1, 1, 0, 0);
@@ -53,27 +54,24 @@ namespace BooGameExample
 		}
 		#endregion Constructors
 
+		#region Nodes
+		private readonly SvgLoader svgLoader;
+		#endregion Nodes
+
 		#region Events
 		/// <summary>
 		/// Called when the resolution is changed.
 		/// </summary>
 		/// <param name="sender">The sender.</param>
 		/// <param name="args">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		protected override void OnResolutionChanged(object sender, System.EventArgs args)
+		protected override void OnResolutionChanged(object sender, EventArgs args)
 		{
-			// Call the parent event.
+			// Call the parent's resolution change.
 			base.OnResolutionChanged(sender, args);
 
-			// Load in the new image key.
-			int scale = 40;
-			SvgImageLoader svgImageLoader = new SvgImageLoader();
-			svgImageLoader.Scale = SvgImageLoader.CentimeterScale * scale;
-			Bitmap bitmap = svgImageLoader.Load(new FileInfo("Images/1cm.svg"));
-			IImageKey imageKey = SystemImageLoader.Load(bitmap);
-
-			// Set the new image key for all the nodes.
-			foreach (ImageNode<float> imageNode in (SceneNodeLinkedList<float>) RootSceneNode)
-				imageNode.ImageKey = imageKey;
+			// Adjust the SVG loader.
+			float screenScale = Platform.Instance.Window.Resolution.Height / 16f;
+			svgLoader.Scale = screenScale * SvgImageLoader.CentimeterScale;
 		}
 		#endregion Events
 	}

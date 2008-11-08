@@ -110,6 +110,10 @@
       <Project>{8CEDC34A-2532-4BDA-B1BB-EA0AAE38D084}</Project>
       <Name>BooGame</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MfGames.Scene2.Svg\MfGames.Scene2.Svg.csproj">
+      <Project>{4F490026-06E6-497E-8B5A-3FA74A127AFF}</Project>
+      <Name>MfGames.Scene2.Svg</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MfGames.Scene2.Tao\MfGames.Scene2.Tao.csproj">
       <Project>{1756B6AA-76DD-4C37-850E-5B0B5F658E04}</Project>
       <Name>MfGames.Scene2.Tao</Name>

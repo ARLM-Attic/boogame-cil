@@ -32,20 +32,13 @@ namespace BooGame.Interfaces
 		Resolution Resolution { get; set; }
 
 		/// <summary>
-		/// Gets or sets the resolution scale for the actual image.
-		/// </summary>
-		/// <value>The scale.</value>
-		float Scale { get; set; }
-
-		/// <summary>
 		/// Sets the specified width, height, and fullscreen of the window at once. If the window
 		/// has not been created, it will be with this function.
 		/// </summary>
 		/// <param name="resolution">The resolution.</param>
-		/// <param name="scale">The scale.</param>
 		/// <param name="fullscreen">if set to <c>true</c> then the window will be fullscreen.</param>
 		/// <param name="title">The title.</param>
-		void Configure(Resolution resolution, float scale, bool fullscreen, string title);
+		void Configure(Resolution resolution, bool fullscreen, string title);
 
 		#region Events
 		/// <summary>
