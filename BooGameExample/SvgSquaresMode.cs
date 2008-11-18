@@ -28,19 +28,21 @@ namespace BooGameExample
 			RootSceneNode = nodes;
 
 			// Load the image into memory.
-			float scale = 40;
 			svgLoader = new SvgLoader(new FileInfo("Images/1cm.svg"));
 			float screenScale = Platform.Instance.Window.Resolution.Height / 16f;
-			svgLoader.Scale = screenScale * SvgImageLoader.CentimeterScale;
+			svgLoader.Scale = screenScale * SvgImageLoader.Meter100px;
 			TextureLoader textureLoader = new TextureLoader(svgLoader);
 
 			// Create squares across the board.
-			for (int i = 0; i < 600 / (2 * scale); i++)
+			rows = (int) (440 / screenScale);
+			columns = (int) (600 / (2 * screenScale));
+
+			for (int i = 0; i < columns; i++)
 			{
-				for (int j = 0; j < 440 / scale; j++)
+				for (int j = 0; j < rows; j++)
 				{
 					ImageNode<float> image = new ImageNode<float>(textureLoader);
-					image.Point = new Point2<float>((j % 2) * scale + i * 2 * scale, j * scale);
+					image.Point = new Point2<float>((j % 2) * screenScale + i * 2 * screenScale, j * screenScale);
 
 					if (i % 4 == 0)
 						image.Tint = new Color<float>(1, 1, 0, 0);
@@ -56,6 +58,7 @@ namespace BooGameExample
 
 		#region Nodes
 		private readonly SvgLoader svgLoader;
+		private int rows, columns;
 		#endregion Nodes
 
 		#region Events
@@ -71,7 +74,21 @@ namespace BooGameExample
 
 			// Adjust the SVG loader.
 			float screenScale = Platform.Instance.Window.Resolution.Height / 16f;
-			svgLoader.Scale = screenScale * SvgImageLoader.CentimeterScale;
+			svgLoader.Scale = screenScale * SvgImageLoader.Meter100px;
+
+			// Create squares across the board.
+			SceneNodeLinkedList<float> nodes = (SceneNodeLinkedList<float>) RootSceneNode;
+			int k = 0;
+
+			for (int i = 0; i < columns; i++)
+			{
+				for (int j = 0; j < rows; j++)
+				{
+					ImageNode<float> node = (ImageNode<float>) nodes[k];
+					node.Point = new Point2<float>((j % 2) * screenScale + i * 2 * screenScale, j * screenScale);
+					k++;
+				}
+			}
 		}
 		#endregion Events
 	}
