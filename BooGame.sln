@@ -13,7 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MfGames", "MfGames\MfGames.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MfGames.Scene2", "MfGames.Scene2\MfGames.Scene2.csproj", "{5A5BFF74-F8CC-45E7-B7B3-CB5F499D2F7F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MfGames.Scene2.Svg", "MfGames.Scene2.Svg\MfGames.Scene2.Svg.csproj", "{4F490026-06E6-497E-8B5A-3FA74A127AFF}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MfGames.Scene2.Tao", "MfGames.Scene2.Tao\MfGames.Scene2.Tao.csproj", "{1756B6AA-76DD-4C37-850E-5B0B5F658E04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MfGames.Svg", "MfGames.Svg\MfGames.Svg.csproj", "{D6DCA909-9248-4246-90F0-687A476FE6EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
